@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-component-competition',
@@ -6,28 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./component-competition.component.css']
 })
 export class ComponentCompetitionComponent {
-  competitions: any[] = []; 
 
-  constructor() {
+  ngOnInit(): void {
+    initFlowbite();
+  }
   
-    this.competitions = [
-      {
-        code: 'ims-23-06-20',
-        date: '2023-06-20',
-        startTime: '13:00',
-        endTime: '15:00',
-        location: 'Imsouane'
-      }
-    ];
-  }
-
- 
-  addCompetition() {
-    
-  }
-
   
-  editCompetition(competition: any) {
-   
-  }
+
 }

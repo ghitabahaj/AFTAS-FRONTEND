@@ -12,9 +12,9 @@ import { ComponentNavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LandingpageComponent } from './landingpage/landingpage.component';
-import { CompetitionModalAddComponent } from './competition-modal-add/competition-modal-add.component';
-import { CompetitionDeleteConfirmComponent } from './competition-delete-confirm/competition-delete-confirm.component';
-import { CompetitionUpdateComponent } from './competition-update/competition-update.component';
+import { RegisterMemberComponentComponent } from './register-member-component/register-member-component.component';
+import { FisheComponentComponent } from './fishe-component/fishe-component.component';
+
 
 
 @NgModule({
@@ -27,9 +27,8 @@ import { CompetitionUpdateComponent } from './competition-update/competition-upd
     ComponentLevelComponent,
     ComponentNavbarComponent,
     LandingpageComponent,
-    CompetitionModalAddComponent,
-    CompetitionDeleteConfirmComponent,
-    CompetitionUpdateComponent,
+    RegisterMemberComponentComponent,
+    FisheComponentComponent,
   ],
   imports: [
     BrowserModule,
