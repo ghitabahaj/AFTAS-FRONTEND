@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentDashboardComponent } from './component-dashboard/component-dashboard.component';
@@ -14,6 +14,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LandingpageComponent } from './landingpage/landingpage.component';
 import { RegisterMemberComponentComponent } from './register-member-component/register-member-component.component';
 import { FisheComponentComponent } from './fishe-component/fishe-component.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -27,14 +29,19 @@ import { FisheComponentComponent } from './fishe-component/fishe-component.compo
     ComponentLevelComponent,
     ComponentNavbarComponent,
     LandingpageComponent,
+
     RegisterMemberComponentComponent,
     FisheComponentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule, 
     BrowserAnimationsModule,
-    NgbModule
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
