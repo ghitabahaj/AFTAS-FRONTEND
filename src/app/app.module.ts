@@ -15,7 +15,7 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
 import { RegisterMemberComponentComponent } from './register-member-component/register-member-component.component';
 import { FisheComponentComponent } from './fishe-component/fishe-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -29,7 +29,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ComponentLevelComponent,
     ComponentNavbarComponent,
     LandingpageComponent,
-
     RegisterMemberComponentComponent,
     FisheComponentComponent,
   ],
@@ -40,8 +39,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
     NgbModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

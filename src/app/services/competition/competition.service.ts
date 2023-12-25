@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from 'rxjs/operators';
 
@@ -13,24 +13,13 @@ export class CompetitionService {
   private addUrl = 'http://localhost:8080/api/v1/competitions/add';
   private availableUrl = 'http://localhost:8080/api/v1/competitions/available';
   private todayUrl = 'http://localhost:8080/api/v1/competitions/today';
+  private pageUrl ='http://localhost:8080/api/v1/competitions/paged';
 
   constructor(private http: HttpClient) { }
 
   getAllCompetitions(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 400) {
-
-          console.error('Error:', error.error);
-          return throwError(error.error);
-        } else {
-        
-          console.error('An unexpected error occurred:', error);
-          return throwError(error.error);
-        }})
-        );
+    return this.http.get<any[]>(`${this.apiUrl}`)
       
-
   }
 
   getAvailableCompetitions(): Observable<any[]>{
@@ -44,5 +33,10 @@ export class CompetitionService {
 
   getCompetitionOftheDay(): Observable<any> {
     return this.http.get<any[]>(`${this.todayUrl}`);
+  }
+
+  getAllPageCompetitions(page: number, size: number): Observable<any> {
+    const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+    return this.http.get<any>(`${this.pageUrl}`, { params });
   }
 }

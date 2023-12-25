@@ -16,18 +16,7 @@ export class MembersService {
 
 
   getAllMembers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}`).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 400) {
-
-          console.error('Error:', error.error);
-          return throwError(error.error);
-        } else {
-        
-          console.error('An unexpected error occurred:', error);
-          return throwError(error.error);
-        }})
-        );
+    return this.http.get<any[]>(`${this.apiUrl}`)
   }
 
   registerMember(ranking: RankingPost): Observable<any>{

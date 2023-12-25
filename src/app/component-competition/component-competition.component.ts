@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { CompetitionService } from '../services/competition/competition.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
+import { PageEvent } from '@angular/material/paginator';
 
 
 
@@ -12,10 +13,15 @@ import Swal from 'sweetalert2';
 })
 export class ComponentCompetitionComponent {
 
+
   private _sub!: Subscription
   competitions: any[] = [];
+  selectedRankings: any[] = [];
   itemsPerPage: number = 5;
-  currentPage: number = 1;
+  currentPage = 0;
+  pageSize = 3;
+  pageSizeOptions: number[] = [3, 5, 25, 100];
+  totalItems = 0;
   competition: any = {
     code: '',
     date: '',
@@ -31,27 +37,49 @@ export class ComponentCompetitionComponent {
 
   ngOnInit(): void {
 
-    this.fetchCompetitions();
+    this.loadCompetitions();
+
+  }
+
+  loadCompetitions(): void {
+    this.competitionService.getAllPageCompetitions(this.currentPage, this.pageSize).subscribe(
+      (response: any) => {
+        console.log('Competitions:', response.content);
+
+        this.competitions = response.content;
+        this.totalItems = response.totalElements;
+        this.selectedRankings = response.content.rankingList;    
+      },
+      (error) => {
+        console.error('Error fetching competitions:', error);
+      }
+    );
+  }
+
+
+  onPageChange(event: PageEvent): void {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadCompetitions();
   }
   
 
-  fetchCompetitions(): void {
 
-    this.competitionService.getAllCompetitions().subscribe(
-      (data: any) => {
-        this.competitions = data.result;
-        console.log(data);
-      },
-      (error) => {
-        console.error('Error retrieving all competitions :', error);
-      }
-    );
+  
+  getRank(code: string): void {
+    const selectedCompetition = this.competitions.find(comp => comp.code === code);  
+    if (selectedCompetition) {
+      this.selectedRankings = selectedCompetition.rankingList;
+      console.log(this.selectedRankings)
+    } else {
+      this.selectedRankings = []; 
+    }
   }
   
   submitForm(): void {
     this.competitionService.addCompetition(this.competition).subscribe(
       (response) => {
-        this.fetchCompetitions();
+        this.loadCompetitions();
         console.log('Competition data sent successfully:', response);
         Swal.fire("Success","Competition data sent successfully","success");
         
@@ -96,6 +124,7 @@ export class ComponentCompetitionComponent {
         return 'Upcoming';
     }
 }
+
 
   
 

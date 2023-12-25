@@ -3,8 +3,9 @@ import { CompetitionService } from '../services/competition/competition.service'
 import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
 import { Competition } from '../model/competition.model';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup ,Validators } from '@angular/forms';
 import { FishService } from '../services/fish/fish.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-component-dashboard',
@@ -12,9 +13,7 @@ import { FishService } from '../services/fish/fish.service';
   styleUrls: ['./component-dashboard.component.css']
 })
 export class ComponentDashboardComponent {
-saveHunt() {
-throw new Error('Method not implemented.');
-}
+
   competition?:Competition;
   huntingFormControl?:FormGroup
   fish : any
@@ -25,8 +24,10 @@ throw new Error('Method not implemented.');
     this.fetchCompetitionOfTheDay();
     this.fetchAllFish();
     this.huntingFormControl=this.formBuilder.group({
-      memberIdentity:[],
-      competitionCode:[]
+      IdentityNumber:[],
+      competitionCode:[],
+      name:[],
+      weight:[]
     })
 
   }
@@ -61,11 +62,29 @@ throw new Error('Method not implemented.');
     );
   }
 
-  saveHunting(competitionCode: String, memberIdentity: String){
+  saveHunting(competitionCode: String, IdentityNumber: String  ){
     this.huntingFormControl=this.formBuilder.group({
-      memberIdentity:[memberIdentity],
-      competitionCode:[competitionCode]
+      IdentityNumber:[IdentityNumber],
+      competitionCode:[competitionCode],
+      name:[],
+      weight:[]
     })
     console.log(this.huntingFormControl?.value)
+  }
+
+    
+  addHunting(): void {
+    console.log(this.huntingFormControl?.value)
+    this.fishService.saveHunting(this.huntingFormControl?.value)
+      .subscribe(
+        (response) => {
+          console.log('Hunt saved successfully:', response);
+          Swal.fire('Success', 'Hunt registered successfully', 'success');
+        },
+        (error) => {
+          console.error('Error sending hunting data:', error);
+          Swal.fire('Error', error.error, 'error');
+        }
+      );
   }
 }
